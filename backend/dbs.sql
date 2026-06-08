@@ -1,0 +1,13 @@
+-- -- Criação da tabela de usuários
+-- CREATE TABLE IF NOT EXISTS usuarios (
+--     id SERIAL PRIMARY KEY,
+--     nome VARCHAR(100) NOT NULL,
+--     email VARCHAR(191) UNIQUE NOT NULL,
+--     senha_hash VARCHAR(255) NOT NULL,
+--     criado_em TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- -- Índice para otimizar a busca por e-mail durante o login
+-- CREATE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email);
+-- insert into usuarios values(default, 'cesar', 'cesar@gmail.com', 'cesar')
+select * from usuarios where email = 'cesar@gmail.com'
