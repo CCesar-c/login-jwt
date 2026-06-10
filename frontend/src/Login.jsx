@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importando o axios
 
 function Login() {
@@ -16,8 +16,8 @@ function Login() {
         email,
         senha
       });
-
-      const token = resposta.data.token;
+      const token = resposta.data;
+      console.log(resposta.data)
 
       if (token) {
         localStorage.setItem('token', token); // Guardando o JWT 
@@ -26,7 +26,7 @@ function Login() {
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        setErro(err.response.data.mensagem || 'Credenciais inválidas');
+        setErro(err.response.data.mensagem);
       } else {
         setErro('Erro ao conectar com o servidor');
       }
@@ -47,6 +47,7 @@ function Login() {
         </div>
         {erro && <p style={{ color: 'red' }}>{erro}</p>}
         <button type="submit">Entrar</button>
+        <Link to={'/Cadastro'} >Criar conta</Link>
       </form>
     </div>
   );

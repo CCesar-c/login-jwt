@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importando o axios
 
 export default function Cadastro() {
@@ -28,10 +28,11 @@ export default function Cadastro() {
                 email,
                 senha
             });
+            console.log(resposta.data)
         } catch (err) {
             console.log(err)
             if (err.response && err.response.data) {
-                setErro(err.response.data.mensagem || 'Credenciais inválidas');
+                setErro(err.response.data.mensagem );
             } else {
                 setErro('Erro ao conectar com o servidor');
             }
@@ -60,6 +61,7 @@ export default function Cadastro() {
                 </div>
                 {erro && <p style={{ color: 'red' }}>{erro}</p>}
                 <button type="submit">Entrar</button>
+                <Link to={'/login'} >Ja tem conta?? faça login..!!</Link>
             </form>
         </div>
     )

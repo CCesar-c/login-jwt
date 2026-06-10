@@ -10,4 +10,4 @@
 -- -- Índice para otimizar a busca por e-mail durante o login
 -- CREATE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email);
 -- insert into usuarios values(default, 'cesar', 'cesar@gmail.com', 'cesar')
-select * from usuarios where email = 'cesar@gmail.com'
+-- select * from usuarios where email = 'cesar@gmail.com'

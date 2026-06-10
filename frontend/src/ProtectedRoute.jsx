@@ -6,7 +6,7 @@ function ProtectedRoute({ children }) {
 
   if (!token) {
     // Redireciona para o login se não estiver autenticado
-    <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;

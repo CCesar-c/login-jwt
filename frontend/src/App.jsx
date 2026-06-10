@@ -2,19 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Cadastro  from "./Cadastro";
-function Dashboard() {
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
-  };
-
-  return (
-    <div>
-      <h2> Bem-vindo ao Dashboard!</h2>
-      <button onClick={handleLogout}>Sair</button>
-    </div>
-  );
-}
+import Dashboard from './Dashboard';
 
 function App() {
   return (
@@ -26,6 +14,22 @@ function App() {
 
         <Route 
           path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard/perfil" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard/configuracao" 
           element={
             <ProtectedRoute>
               <Dashboard />
