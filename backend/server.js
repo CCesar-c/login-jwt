@@ -19,8 +19,8 @@ const JWT_SECRET = 'sua_chave_secreta_aqui';
 //   senhaHash: '$2b$10$13T4x1mVb0ifV4p3AsfXpeJ5Lb9C2IFIqFHd3.lXI2Y50WEhsp53i' 
 // };
 
-app.get('/home', async (request, response) => {
-    const email = "cesar@gmail.com"
+app.get('/home/:email', async (request, response) => {
+    const { email } = request.params
     const user_db = await pool.query("select * from usuarios where email = $1", [email]);
     console.log(user_db.rows)
     response.json(user_db.rows);
@@ -33,13 +33,13 @@ app.post('/cadastro', async (req, response) => {
     try {
         const user_db = await pool.query("select * from usuarios where email = $1", [email]);
         console.log(user_db.rows[0] == undefined);
-        
+
         if (user_db.rows[0] == undefined) {
             const hashGerado = await bcrypt.hash(senha, 10);
             const user_db_post = await pool.query("insert into usuarios values(Default, $1, $2, $3) returning *", [nome, email, hashGerado]);
             console.log(`Resposta do DB e ${user_db_post.rows} `);
             return response.send(user_db_post.rows)
-        }else if (user_db.rows[0].email == email) {
+        } else if (user_db.rows[0].email == email) {
             return response.status(401).json({ mensagem: 'Credenciais inválidas usuario ja existe' });
         }
     } catch (error) {

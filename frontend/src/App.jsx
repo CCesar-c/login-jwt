@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Cadastro  from "./Cadastro";
-import Dashboard from './Dashboard';
+import Dashboard, {Configuracao, Perfil} from './Dashboard';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           path="/dashboard/perfil" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Perfil/>
             </ProtectedRoute>
           } 
         />
@@ -32,7 +32,7 @@ function App() {
           path="/dashboard/configuracao" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Configuracao />
             </ProtectedRoute>
           } 
         />

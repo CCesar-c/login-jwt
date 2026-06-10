@@ -22,6 +22,7 @@ function Login() {
       if (token) {
         localStorage.setItem('token', token); // Guardando o JWT 
         setErro('');
+        localStorage.setItem('email', email); 
         navigate('/dashboard'); //  Redirecionando para a rota protegida
       }
     } catch (err) {
