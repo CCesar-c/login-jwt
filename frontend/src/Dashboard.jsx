@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
     const handleLogout = () => {
@@ -10,6 +11,7 @@ export default function Dashboard() {
     return (
         <div>
             <h2> Bem-vindo ao Dashboard!</h2>
+            <Navigacion />
             <button onClick={handleLogout}>Sair</button>
         </div>
     );
@@ -23,6 +25,7 @@ export function Configuracao() {
     return (
         <div>
             <h2> Bem-vindo as configuracoes!</h2>
+            <Navigacion />
             <button onClick={handleLogout}>Sair</button>
         </div>
     );
@@ -50,7 +53,19 @@ export function Perfil() {
         <div>
             <h2> Bem-vindo ao perfil!</h2>
             <h1>nome: { }</h1>
+            <Navigacion />
             <button onClick={handleLogout}>Sair</button>
         </div>
     );
+}
+
+function Navigacion() {
+    const nav = useNavigate();
+    return (
+        <div>
+            <button onClick={() => nav('/dashboard/')} >Dashboard</button>
+            <button onClick={() => nav('/dashboard/configuracao')} >Dashboard</button>
+            <button onClick={() => nav('/dashboard/perfil')} >Dashboard</button>
+        </div>
+    )
 }
