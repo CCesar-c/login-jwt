@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -31,12 +32,14 @@ export function Configuracao() {
     );
 }
 export function Perfil() {
+    const [pfl, setPerfil] = useState([])
     useEffect(() => {
         const Todo = async () => {
             try {
                 var email = localStorage.getItem('email')
                 const response = await axios.get(`http://localhost:3000/home/${email}`);
-                console.log(response);
+                console.log(response.data[0]);
+                setPerfil(response.data[0]);
             } catch (error) {
                 console.error(error);
             }
@@ -52,7 +55,9 @@ export function Perfil() {
     return (
         <div>
             <h2> Bem-vindo ao perfil!</h2>
-            <h1>nome: { }</h1>
+            <h1>nome: {pfl.nome}</h1>
+            <h1>nome: {pfl.email}</h1>
+            <h1>nome: {pfl.criado_em}</h1>
             <Navigacion />
             <button onClick={handleLogout}>Sair</button>
         </div>
@@ -64,8 +69,8 @@ function Navigacion() {
     return (
         <div>
             <button onClick={() => nav('/dashboard/')} >Dashboard</button>
-            <button onClick={() => nav('/dashboard/configuracao')} >Dashboard</button>
-            <button onClick={() => nav('/dashboard/perfil')} >Dashboard</button>
+            <button onClick={() => nav('/dashboard/configuracao')} >Configuração</button>
+            <button onClick={() => nav('/dashboard/perfil')} >Perfil</button>
         </div>
     )
 }
