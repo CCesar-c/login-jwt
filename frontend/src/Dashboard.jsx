@@ -4,30 +4,47 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.reload();
-    };
 
     return (
         <div>
             <h2> Bem-vindo ao Dashboard!</h2>
             <Navigacion />
-            <button onClick={handleLogout}>Sair</button>
+
         </div>
     );
 }
 export function Configuracao() {
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.reload();
-    };
+    const [senha, setSenha] = useState('');
+    const [confirsenha, setConfirSenha] = useState('');
+    const [erro, setErro] = useState('');
+
+    const alterarSenha = async () => {
+        const response  = await axios.put('http://localhost:3000/alterarSenha', {
+            email: localStorage.getItem('email'),
+            senha: senha
+        })
+        console.log(response.data);
+        
+    }
+
+    useEffect(() => {
+        if (senha != confirsenha) {
+            setErro("As senhas sao diferentes")
+        } else {
+            setErro("")
+        }
+    }, [confirsenha])
 
     return (
         <div>
             <h2> Bem-vindo as configuracoes!</h2>
+            <div style={{ display:"flex", gap:10, flexDirection:"column", width:200 }} >
+                <input type="text" placeholder="Digite a nova senha" onChange={(e) => setSenha(e.target.value)} />
+                <input type="text" placeholder="Confirme a nova senha" onChange={(e) => setConfirSenha(e.target.value)} />
+                <button type="button" onClick={() => alterarSenha()} >Confirmar senha</button>
+                {erro && <p style={{ color: 'red' }}>{erro}</p>}
+            </div>
             <Navigacion />
-            <button onClick={handleLogout}>Sair</button>
         </div>
     );
 }
@@ -47,10 +64,6 @@ export function Perfil() {
         }
         Todo()
     }, [])
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.reload();
-    };
 
     return (
         <div>
@@ -59,15 +72,19 @@ export function Perfil() {
             <h1>nome: {pfl.email}</h1>
             <h1>nome: {pfl.criado_em}</h1>
             <Navigacion />
-            <button onClick={handleLogout}>Sair</button>
         </div>
     );
 }
 
 function Navigacion() {
     const nav = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.reload();
+    };
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, width: 100, justifyItems: "center" }} >
+            <button onClick={handleLogout}>Sair</button>
             <button onClick={() => nav('/dashboard/')} >Dashboard</button>
             <button onClick={() => nav('/dashboard/configuracao')} >Configuração</button>
             <button onClick={() => nav('/dashboard/perfil')} >Perfil</button>

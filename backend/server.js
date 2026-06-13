@@ -48,7 +48,20 @@ app.post('/cadastro', async (req, response) => {
     }
 
 })
+app.put('/alterarSenha',async (request, response) =>{
+    const { email, senha } = request.body;
+    response.send(`email: ${email} \nsenha: ${senha}`);
+    try {
+        var senha_hash = await bcrypt.hash(senha, 10)
+        console.log(senha_hash);
 
+        const res = await pool.query('update usuarios set senha_hash = $1 where email = $2', [senha_hash, email])
+        response.send(res.rows);
+    } catch (error) {
+        return response.status(500).send("Erro no servidor");
+        
+    }
+})
 app.post('/login', async (request, response) => {
     const { email, senha } = request.body;
     var user_db;
